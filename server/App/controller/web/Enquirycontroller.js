@@ -1,4 +1,4 @@
-const enquiryModel = require("../../models/enquiry.model");
+const enquiryModel = require("../../models/enquiry.modal");
 
 let enquiryinsert = async (req, res) => {
   try {
