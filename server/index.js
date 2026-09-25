@@ -10,10 +10,13 @@ app.use(express.json());
 app.get("/", (req,res)=> res.send("Backend is running") );
 app.use('/api/website/enquiry',enquiryrouter);
 
-mongoose.connect(process.env.DBUR).then(()=>{
-    console.log("Database Connected");
-}).catch((err)=> console.log(err));
+let isConnected = false;
+async function connectDB(){
+  if(isConnected) return;
+  await mongoose.connect(process.env.DBUR);
+  isConnected = true;
+  console.log("Database Connected");
+}
+connectDB();
 
-// Vercel ke liye
-app.listen(process.env.PORT || 5000, ()=> console.log("Server running"));
 module.exports = app;

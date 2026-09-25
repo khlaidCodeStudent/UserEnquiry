@@ -7,4 +7,3 @@ enquiryrouter.delete('/delete/:id',enquirydelete)
 enquiryrouter.get('/update/:id',enquiryupdate)
 enquiryrouter.put('/updateenquiry/:id',updaterow)
 module.exports=enquiryrouter;
-
