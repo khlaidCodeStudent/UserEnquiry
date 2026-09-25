@@ -6,7 +6,6 @@ import { EnquiryList } from "./Enquiry/EnquiryList";
 import { useEffect, useState } from "react";
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 
-// YAHAN FIX KIYA HAI
 const API_URL = import.meta.env.VITE_API_URL || "https://user-enquiry-44cl.vercel.app";
 
 export default function Enquiry() {
@@ -25,8 +24,10 @@ export default function Enquiry() {
     e.preventDefault()
     if(formData._id){
      axios.put(`${API_URL}/api/website/enquiry/updateenquiry/${formData._id}`, formData)
-   .then(() => {
-    toast.success('Enquiry Updated Successfully')
+  .then(() => {
+    toast.success('Enquiry Updated Successfully', {
+      autoClose: 2000,
+    })
     setFormData({
         name: '',
         email: '',
@@ -38,9 +39,11 @@ export default function Enquiry() {
     })
     }else{
      axios.post(`${API_URL}/api/website/enquiry/insert`,formData)
-   .then((res)=>{
+  .then((res)=>{
       console.log(res.data)
-      toast.success("Enquiry Submitted Successfully")
+      toast.success("Enquiry Submitted Successfully", {
+        autoClose: 2000, // 2 second me hat jayega
+      })
       setFormData({
         name: "",
         email: "",
@@ -54,10 +57,10 @@ export default function Enquiry() {
 
     let getallenquiry=()=>{
       axios.get(`${API_URL}/api/website/enquiry/view`)
-     .then((res)=>{
+    .then((res)=>{
        return res.data
       })
-     .then((finaldata)=>{
+    .then((finaldata)=>{
        if(finaldata.status===true) {
         setEnquiryList(finaldata.data)
        }
@@ -75,7 +78,15 @@ export default function Enquiry() {
     getallenquiry()
   },[])
   return (
-    <div><ToastContainer />
+    <div>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        pauseOnHover={false}
+      />
       <h1 className='text-[40px] text-center py-6 font-bold bg-gray-500 underline border border-none'>Enquiry System</h1>
       <div className='grid grid-cols-[30%_auto] gap-10 pt-3'>
         <div className='bg-gray-200 p-4'>
