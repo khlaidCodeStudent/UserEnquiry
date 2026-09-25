@@ -4,17 +4,16 @@ const enquiryrouter=require("./App/routes/web/EnquiryRoutes");
 let cors=require("cors");
 require("dotenv").config();
 let app=express();
-app.use(cors());
+app.use(cors({ origin: "*" }));
 app.use(express.json());
-//routes
+
+app.get("/", (req,res)=> res.send("Backend is running") );
 app.use('/api/website/enquiry',enquiryrouter);
 
 mongoose.connect(process.env.DBUR).then(()=>{
     console.log("Database Connected");
-    app.listen(process.env.PORT, ()=>{
-    console.log(`Server is running on port ${process.env.PORT}`);
-}); 
-}).catch((err)=>{
-    console.log(err);
-});
+}).catch((err)=> console.log(err));
 
+// Vercel ke liye
+app.listen(process.env.PORT || 5000, ()=> console.log("Server running"));
+module.exports = app;
